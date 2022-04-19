@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import { ResizableBox } from 'react-resizable';
+import Editor from '@monaco-editor/react';
 import styles from './styles/style.module.css';
 import './styles/style.css';
 import './styles/resizable-styles.css';
@@ -10,7 +11,6 @@ function Container(props) {
   return <div className={styles.Container}>{props.children}</div>;
 }
 
-//
 const queueDescription =
   'A queue is a first in first out datastructure. Like a line up of people.';
 const queuePage = (
@@ -144,7 +144,12 @@ function Code({ name, description, imageLink, videoLink }) {
         </div>
       </ResizableBox>
       <div className={styles.CodeRight} style={{ left: `${width}px` }}>
-        CodeRight
+        <Editor
+          height="100%"
+          language="javascript"
+          theme="vs-dark"
+          value="let a = 5;"
+        />
       </div>
     </div>
   );
