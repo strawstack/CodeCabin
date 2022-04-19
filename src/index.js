@@ -6,6 +6,7 @@ import Editor from '@monaco-editor/react';
 import styles from './styles/style.module.css';
 import './styles/style.css';
 import './styles/resizable-styles.css';
+import queue_template from './code/queue_template.js';
 
 function Container(props) {
   return <div className={styles.Container}>{props.children}</div>;
@@ -18,6 +19,8 @@ const queuePage = (
     name="queue"
     description={queueDescription}
     imageLink="https://via.placeholder.com/500"
+    videoLink="#"
+    code={queue_template}
   />
 );
 
@@ -98,10 +101,12 @@ function About() {
   );
 }
 
-function Code({ name, description, imageLink, videoLink }) {
+function Code({ name, description, imageLink, videoLink, code }) {
   const pageContainer = useRef(0);
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(400);
+  let editorValue = code;
+  let shiftDown = false;
 
   function getHeight() {
     return pageContainer.current.offsetHeight;
@@ -115,11 +120,54 @@ function Code({ name, description, imageLink, videoLink }) {
     setWidth(data.size.width);
   }
 
+  function onChangeEvent(value, event) {
+    editorValue = value;
+  }
+
+  function keyDownEvent(e) {
+    let key = e.key;
+    // Track if shift is pressed
+    if (key === 'Shift') {
+      shiftDown = true;
+    }
+  }
+
+  function keyUpEvent(e) {
+    let key = e.key;
+
+    // Run code on shift + enter
+    if (shiftDown && key === 'Enter') {
+      runCode();
+
+      // Track if shift is pressed
+    } else if (key === 'Shift') {
+      shiftDown = false;
+    }
+  }
+
+  function keyPressEvent(e) {
+    let key = e.key;
+    // Prevent new line when code is run
+    if (shiftDown && key === 'Enter') {
+      e.preventDefault();
+    }
+  }
+
+  function runCode() {
+    console.log('code runs');
+  }
+
   useEffect(() => {
     setHeight(getHeight());
     setWidth(width);
+    window.addEventListener('keydown', keyDownEvent);
+    window.addEventListener('keyup', keyUpEvent);
+    window.addEventListener('keypress', keyPressEvent);
     window.addEventListener('resize', resizeEvent);
     return () => {
+      window.removeEventListener('keydown', keyDownEvent);
+      window.removeEventListener('keyup', keyUpEvent);
+      window.removeEventListener('keypress', keyPressEvent);
       window.removeEventListener('resize', resizeEvent);
     };
   }, []);
@@ -148,7 +196,9 @@ function Code({ name, description, imageLink, videoLink }) {
           height="100%"
           language="javascript"
           theme="vs-dark"
-          value="let a = 5;"
+          value={editorValue}
+          onChange={onChangeEvent}
+          options={{ fontSize: 16 }}
         />
       </div>
     </div>
