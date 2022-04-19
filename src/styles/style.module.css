@@ -1,0 +1,42 @@
+.Container {
+  margin: 50px;
+}
+
+.Main {
+  display: flex;
+  flex-direction: column;
+  color: #333;
+}
+
+.Main > a {
+  margin-bottom: 30px;
+  text-decoration: none;
+  color: #333;
+}
+
+.Main > a.Focus {
+  background: #333;
+  color: white;
+}
+
+.About {
+  opacity: 1;
+}
+
+.Code {
+  height: 100%;
+}
+
+.Code .CodeLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.Code .FlexImage {
+  width: 300px;
+  height: auto;
+  border: 1px solid #333;
+}
