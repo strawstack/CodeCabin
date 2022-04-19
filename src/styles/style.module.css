@@ -36,7 +36,16 @@
 }
 
 .Code .FlexImage {
-  width: 300px;
+  width: 100%;
+  max-width: 350px;
   height: auto;
   border: 1px solid #333;
+}
+
+.Code .CodeRight {
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
 }

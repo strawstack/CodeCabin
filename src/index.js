@@ -101,6 +101,7 @@ function About() {
 function Code({ name, description, imageLink, videoLink }) {
   const pageContainer = useRef(0);
   const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(400);
 
   function getHeight() {
     return pageContainer.current.offsetHeight;
@@ -110,8 +111,13 @@ function Code({ name, description, imageLink, videoLink }) {
     setHeight(getHeight());
   }
 
+  function widthResizeEvent(e, data) {
+    setWidth(data.size.width);
+  }
+
   useEffect(() => {
     setHeight(getHeight());
+    setWidth(width);
     window.addEventListener('resize', resizeEvent);
     return () => {
       window.removeEventListener('resize', resizeEvent);
@@ -122,11 +128,12 @@ function Code({ name, description, imageLink, videoLink }) {
     <div className={styles.Code} ref={pageContainer}>
       <ResizableBox
         className="custom-box box"
+        onResize={widthResizeEvent}
         width={400}
         height={height}
         axis={'x'}
         handle={<span className="custom-handle custom-handle-e" />}
-        minConstraints={[100, height]}
+        minConstraints={[200, height]}
         maxConstraints={[800, height]}
         handleSize={[8, 100]}
       >
@@ -136,6 +143,9 @@ function Code({ name, description, imageLink, videoLink }) {
           <img className={styles.FlexImage} src={imageLink} alt="placeholder" />
         </div>
       </ResizableBox>
+      <div className={styles.CodeRight} style={{ left: `${width}px` }}>
+        CodeRight
+      </div>
     </div>
   );
 }
