@@ -5,7 +5,7 @@ export const QueueTemplate = `/*
 /*
 * define global variables.
 */
-queue = undefined;
+let queue = undefined;
 
 /*
 * define functions.
@@ -22,7 +22,21 @@ function peek() {
 
 }`;
 
+const QueueTestString = `
+push(5);
+push(2);
+push(3);
+push(4);
+let lst = [];
+lst.push(pop());
+lst.push(pop());
+lst.push(pop());
+lst.push(pop());
+return lst;
+`;
+
 export const QueueTest = function (codeStr) {
-  console.log(codeStr);
+  let testFunction = new Function(codeStr + QueueTestString);
+  console.log(testFunction());
   return true;
 };

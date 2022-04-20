@@ -148,11 +148,22 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
 
     // Run code on shift + enter
     if (shiftDown && key === 'Enter') {
-      runCode();
+      testCode();
 
       // Track if shift is pressed
     } else if (key === 'Shift') {
       shiftDown = false;
+    }
+  }
+
+  function testBtnPress() {
+    testCode();
+  }
+
+  function resetBtnPress() {
+    let response = confirm("Reset code? This can't be undone.");
+    if (response) {
+      setCode(initialCode);
     }
   }
 
@@ -164,8 +175,8 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
     }
   }
 
-  function runCode() {
-    console.log(test(editorValue));
+  function testCode() {
+    console.log(test(code));
   }
 
   useEffect(() => {
@@ -205,8 +216,12 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
       </ResizableBox>
       <div className={styles.CodeRight} style={{ left: `${width}px` }}>
         <div className={styles.BtnBar}>
-          <div className={styles.Btn}>reset</div>
-          <div className={styles.Btn}>test</div>
+          <div className={styles.Btn} onClick={resetBtnPress}>
+            reset
+          </div>
+          <div className={styles.Btn} onClick={testBtnPress}>
+            test
+          </div>
         </div>
         <Editor
           height="100%"
