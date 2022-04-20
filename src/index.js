@@ -6,7 +6,17 @@ import Editor from '@monaco-editor/react';
 import styles from './styles/style.module.css';
 import './styles/style.css';
 import './styles/resizable-styles.css';
-import queue_template from './code/queue_template.js';
+import { QueueTemplate, QueueTest } from './code/queue.js';
+
+function syncLocalStorageWithState(key, initialState) {
+  const [code, setCode] = React.useState(
+    () => window.localStorage.getItem(key) || initialState
+  );
+  React.useEffect(() => {
+    window.localStorage.setItem(key, code);
+  }, [code]);
+  return [code, setCode];
+}
 
 function Container(props) {
   return <div className={styles.Container}>{props.children}</div>;
@@ -20,7 +30,8 @@ const queuePage = (
     description={queueDescription}
     imageLink="https://via.placeholder.com/500"
     videoLink="#"
-    code={queue_template}
+    initialCode={QueueTemplate}
+    test={QueueTest}
   />
 );
 
@@ -101,11 +112,11 @@ function About() {
   );
 }
 
-function Code({ name, description, imageLink, videoLink, code }) {
+function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   const pageContainer = useRef(0);
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(400);
-  let editorValue = code;
+  const [code, setCode] = syncLocalStorageWithState(name, initialCode);
   let shiftDown = false;
 
   function getHeight() {
@@ -121,7 +132,7 @@ function Code({ name, description, imageLink, videoLink, code }) {
   }
 
   function onChangeEvent(value, event) {
-    editorValue = value;
+    setCode(value);
   }
 
   function keyDownEvent(e) {
@@ -154,12 +165,13 @@ function Code({ name, description, imageLink, videoLink, code }) {
   }
 
   function runCode() {
-    console.log('code runs');
+    console.log(test(editorValue));
   }
 
   useEffect(() => {
     setHeight(getHeight());
     setWidth(width);
+    setCode(code);
     window.addEventListener('keydown', keyDownEvent);
     window.addEventListener('keyup', keyUpEvent);
     window.addEventListener('keypress', keyPressEvent);
@@ -192,11 +204,15 @@ function Code({ name, description, imageLink, videoLink, code }) {
         </div>
       </ResizableBox>
       <div className={styles.CodeRight} style={{ left: `${width}px` }}>
+        <div className={styles.BtnBar}>
+          <div className={styles.Btn}>reset</div>
+          <div className={styles.Btn}>test</div>
+        </div>
         <Editor
           height="100%"
           language="javascript"
           theme="vs-dark"
-          value={editorValue}
+          value={code}
           onChange={onChangeEvent}
           options={{ fontSize: 16 }}
         />

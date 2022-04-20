@@ -48,4 +48,33 @@
   top: 0px;
   right: 0px;
   bottom: 0px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.Code .BtnBar {
+  height: 80px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px 50px;
+  box-shadow: 5px 5px 5px #111;
+  z-index: 1;
+  background: #666;
+}
+
+.Code .BtnBar .Btn {
+  padding: 10px;
+  margin-left: 50px;
+  background: #888;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  transition: background 0.2s;
+}
+
+.Code .BtnBar .Btn:hover {
+  background: #444;
+  cursor: pointer;
 }

@@ -1,5 +1,4 @@
-let queue_template;
-export default queue_template = `/*
+export const QueueTemplate = `/*
 * implement a queue.
 */
 
@@ -22,3 +21,8 @@ function pop() {
 function peek() {
 
 }`;
+
+export const QueueTest = function (codeStr) {
+  console.log(codeStr);
+  return true;
+};
