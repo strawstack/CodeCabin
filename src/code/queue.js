@@ -22,6 +22,8 @@ function peek() {
 
 }`;
 
+function testCaseOne() {}
+
 const QueueTestString = `
 push(5);
 push(2);
