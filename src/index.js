@@ -210,6 +210,10 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
       >
         <div className={styles.CodeLeft}>
           <h1>{name}</h1>
+          <div className={styles.TabsBar}>
+            <div className={styles.Btn}>learn</div>
+            <div className={styles.Btn}>test</div>
+          </div>
           <p>{description}</p>
           <img className={styles.FlexImage} src={imageLink} alt="placeholder" />
         </div>

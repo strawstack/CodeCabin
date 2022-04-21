@@ -63,9 +63,8 @@
   background: #666;
 }
 
-.Code .BtnBar .Btn {
+.Code .Btn {
   padding: 10px;
-  margin-left: 50px;
   background: #888;
   display: flex;
   justify-content: center;
@@ -74,7 +73,11 @@
   transition: background 0.2s;
 }
 
-.Code .BtnBar .Btn:hover {
+.Code .BtnBar .Btn {
+  margin-left: 50px;
+}
+
+.Code .Btn:hover {
   background: #444;
   cursor: pointer;
 }
