@@ -117,6 +117,7 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(400);
   const [code, setCode] = syncLocalStorageWithState(name, initialCode);
+  const [showLearn, setShowLearn] = useState(true);
   let shiftDown = false;
 
   function getHeight() {
@@ -214,8 +215,15 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
             <div className={styles.Btn}>learn</div>
             <div className={styles.Btn}>test</div>
           </div>
-          <p>{description}</p>
-          <img className={styles.FlexImage} src={imageLink} alt="placeholder" />
+          <div className={styles.Seperator}></div>
+          <div className={styles.TabContent}>
+            <p>{description}</p>
+            <img
+              className={styles.FlexImage}
+              src={imageLink}
+              alt="placeholder"
+            />
+          </div>
         </div>
       </ResizableBox>
       <div className={styles.CodeRight} style={{ left: `${width}px` }}>

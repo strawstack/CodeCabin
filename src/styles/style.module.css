@@ -27,7 +27,8 @@
   height: 100%;
 }
 
-.Code .CodeLeft {
+.Code .CodeLeft,
+.TabContent {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,6 +51,13 @@
   bottom: 0px;
   display: grid;
   grid-template-rows: auto 1fr;
+}
+
+.Code .Seperator {
+  margin: 25px 0px;
+  height: 5px;
+  background: white;
+  width: 80%;
 }
 
 .Code .BtnBar {
