@@ -42,19 +42,19 @@ export const QueueTest = function (codeStr) {
     testCases: [],
     runtimes: {
       worst: null,
-      users: null,
+      user: null,
       optimal: null,
     },
   };
   for (let testCase of testCases) {
     const testFunction = new Function(codeStr + testCase);
-    const testCaseResult = null;
+    let testCaseResult = null;
     try {
       testCaseResult = testFunction();
     } catch (e) {
-      testCaseResult = 'exception thrown';
+      testCaseResult = `exception`;
     }
-    testData.testCases(testCaseResult);
+    testData.testCases.push(testCaseResult);
   }
   return testData;
 };

@@ -257,7 +257,7 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
             reset
           </div>
           <div className={styles.Btn} onClick={testBtnPress}>
-            test
+            run
           </div>
         </div>
         <Editor
