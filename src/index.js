@@ -112,6 +112,12 @@ function About() {
   );
 }
 
+function getBtnSelectedClass(className, value) {
+  const baseClass = className;
+  const selectedClass = value ? styles.Selected : '';
+  return `${baseClass} ${selectedClass}`;
+}
+
 function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   const pageContainer = useRef(0);
   const [height, setHeight] = useState(0);
@@ -212,17 +218,36 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
         <div className={styles.CodeLeft}>
           <h1>{name}</h1>
           <div className={styles.TabsBar}>
-            <div className={styles.Btn}>learn</div>
-            <div className={styles.Btn}>test</div>
+            <div
+              className={getBtnSelectedClass(styles.Btn, showLearn)}
+              onClick={() => setShowLearn(true)}
+            >
+              learn
+            </div>
+            <div
+              className={getBtnSelectedClass(styles.Btn, !showLearn)}
+              onClick={() => setShowLearn(false)}
+            >
+              test
+            </div>
           </div>
           <div className={styles.Seperator}></div>
-          <div className={styles.TabContent}>
+          <div
+            className={`${styles.TabContent} ${styles.Learn}`}
+            style={{ display: showLearn ? 'block' : 'none' }}
+          >
             <p>{description}</p>
             <img
               className={styles.FlexImage}
               src={imageLink}
               alt="placeholder"
             />
+          </div>
+          <div
+            className={`${styles.TabContent} ${styles.Test}`}
+            style={{ display: showLearn ? 'none' : 'block' }}
+          >
+            <p>The tests display here.</p>
           </div>
         </div>
       </ResizableBox>
