@@ -22,23 +22,39 @@ function peek() {
 
 }`;
 
-function testCaseOne() {}
+const testCases = [];
 
-const QueueTestString = `
-push(5);
-push(2);
-push(3);
-push(4);
-let lst = [];
-lst.push(pop());
-lst.push(pop());
-lst.push(pop());
-lst.push(pop());
-return lst;
-`;
+testCases.push(`
+  push(5);
+  push(2);
+  push(3);
+  push(4);
+  let lst = [];
+  lst.push(pop());
+  lst.push(pop());
+  lst.push(pop());
+  lst.push(pop());
+  return lst[0] === 5 && lst[1] === 2 && lst[2] === 3 && lst[3] === 4;
+`);
 
 export const QueueTest = function (codeStr) {
-  let testFunction = new Function(codeStr + QueueTestString);
-  console.log(testFunction());
-  return true;
+  const testData = {
+    testCases: [],
+    runtimes: {
+      worst: null,
+      users: null,
+      optimal: null,
+    },
+  };
+  for (let testCase of testCases) {
+    const testFunction = new Function(codeStr + testCase);
+    const testCaseResult = null;
+    try {
+      testCaseResult = testFunction();
+    } catch (e) {
+      testCaseResult = 'exception thrown';
+    }
+    testData.testCases(testCaseResult);
+  }
+  return testData;
 };
