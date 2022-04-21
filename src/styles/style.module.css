@@ -77,6 +77,14 @@
   margin-left: 50px;
 }
 
+.Code .TabsBar {
+  display: flex;
+}
+
+.Code .TabsBar .Btn:first-child {
+  margin-right: 50px;
+}
+
 .Code .Btn:hover {
   background: #444;
   cursor: pointer;
