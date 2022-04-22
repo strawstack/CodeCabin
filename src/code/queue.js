@@ -41,9 +41,8 @@ export const QueueTest = function (codeStr) {
   const testData = {
     testCases: [],
     runtimes: {
-      worst: null,
-      user: null,
-      optimal: null,
+      expected: null, // <- run the built in optimal solution against the 'runtime' testcase
+      actual: null,
     },
   };
   for (let testCase of testCases) {
@@ -51,9 +50,7 @@ export const QueueTest = function (codeStr) {
     let testCaseResult = null;
     try {
       testCaseResult = testFunction();
-    } catch (e) {
-      testCaseResult = `exception`;
-    }
+    } catch (e) {} // if exception, 'testCaseResult' will be null
     testData.testCases.push(testCaseResult);
   }
   return testData;
