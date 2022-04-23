@@ -53,28 +53,79 @@ testCases.push(`
   return true;
 `);
 
-const QueueOptimal = `/*
-* implement a queue.
-*/
+function listsEqual(a, b) {
+  if (a.length !== b.length) {
+    return false;
+  }
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) {
+      return false;
+    }
+  }
+  return true;
+}
 
-/*
-* define global variables.
-*/
-let queue = undefined;
+const runtimeTestcase = `
+let lst = [];
+let count = 0;
+while (count < 1000000) {
+    lst.push(Math.floor(Math.random() * 100000))
+    count += 1;
+}
 
-/*
-* define functions.
-*/
+count = 0;
+while (count < 1000000) {
+    push(lst[i]);
+    count += 1;
+}
+
+count = 0;
+let ansLst = [];
+while (count < 1000000) {
+    if (pop() !== lst[count]) {
+      return false;
+    }
+    return true;
+}`;
+
+const queueOptimal = `
+let frontPointer = null;
+let backPointer = null;
+
+function newNode(value, next=null) {
+    return {
+        value: value,
+        next: next
+    };
+}
+
 function push(item) {
-
+    if (frontPointer === null) {
+        frontPointer = newNode(item);
+        backPointer = frontPointer;
+    } else {
+        backPointer.next = newNode(item);
+        backPointer = backPointer.next;
+    }
 }
 
 function pop() {
-
+    if (frontPointer === null) {
+        return null;
+    }
+    const node = frontPointer;
+    frontPointer = frontPointer.next;
+    if (frontPointer === null) { 
+        backPointer = null;
+    }
+    return node.value;
 }
 
 function peek() {
-
+    if (frontPointer !== null) {
+        return frontPointer.value;
+    }
+    return null;
 }`;
 
 export const QueueTest = function (codeStr) {
