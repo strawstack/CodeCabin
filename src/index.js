@@ -188,7 +188,23 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   }
 
   function showTestData(data) {
-    return <div>Test data here</div>;
+    console.log(data);
+    let count = 0;
+    let lst = [];
+    for (let testCaseResult of data.testCases) {
+      lst.push(
+        <div>
+          Testcase {count}:{' '}
+          {testCaseResult === null
+            ? 'Exception'
+            : testCaseResult
+            ? 'Correct'
+            : 'Wrong answer'}
+        </div>
+      );
+      count += 1;
+    }
+    return lst;
   }
 
   function showRuntimeData(data) {
@@ -262,13 +278,13 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
             </div>
             <h2>Testcases</h2>
             {testData == null ? (
-              <div>Click 'run' to view testcase results.</div>
+              <div>Click 'run' to view results.</div>
             ) : (
               showTestData(testData)
             )}
             <h2>Runtime</h2>
             {testData == null ? (
-              <div>Click 'run' to view runtime results.</div>
+              <div>Click 'run' to view results.</div>
             ) : (
               showRuntimeData(testData)
             )}
