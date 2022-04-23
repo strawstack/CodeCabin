@@ -247,7 +247,14 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
             className={`${styles.TabContent} ${styles.Test}`}
             style={{ display: showLearn ? 'none' : 'block' }}
           >
-            <p>The tests display here.</p>
+            <h2>Run Tests</h2>
+            <div className={styles.Btn} onClick={testBtnPress}>
+              run
+            </div>
+            <h2>Testcases</h2>
+            <div>Click 'run' to view testcase results.</div>
+            <h2>Runtime</h2>
+            <div>Click 'run' to view runtime results.</div>
           </div>
         </div>
       </ResizableBox>
