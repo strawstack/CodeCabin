@@ -124,6 +124,7 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   const [width, setWidth] = useState(400);
   const [code, setCode] = syncLocalStorageWithState(name, initialCode);
   const [showLearn, setShowLearn] = useState(true);
+  const [testData, setTestData] = useState(null);
   let shiftDown = false;
 
   function getHeight() {
@@ -183,7 +184,15 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   }
 
   function testCode() {
-    console.log(test(code));
+    setTestData(test(code));
+  }
+
+  function showTestData(data) {
+    return <div>Test data here</div>;
+  }
+
+  function showRuntimeData(data) {
+    return <div>Runtime data here</div>;
   }
 
   useEffect(() => {
@@ -252,9 +261,17 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
               run
             </div>
             <h2>Testcases</h2>
-            <div>Click 'run' to view testcase results.</div>
+            {testData == null ? (
+              <div>Click 'run' to view testcase results.</div>
+            ) : (
+              showTestData(testData)
+            )}
             <h2>Runtime</h2>
-            <div>Click 'run' to view runtime results.</div>
+            {testData == null ? (
+              <div>Click 'run' to view runtime results.</div>
+            ) : (
+              showRuntimeData(testData)
+            )}
           </div>
         </div>
       </ResizableBox>

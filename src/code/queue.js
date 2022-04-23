@@ -37,6 +37,46 @@ testCases.push(`
   return lst[0] === 5 && lst[1] === 2 && lst[2] === 3 && lst[3] === 4;
 `);
 
+testCases.push(`
+  push(5);
+  push(2);
+  push(3);
+  push(4);
+  if (peek() != 5) return false;
+  pop();
+  if (peek() != 2) return false;
+  pop();
+  if (peek() != 3) return false;
+  pop();
+  if (peek() != 4) return false;
+  pop();
+  return true;
+`);
+
+const QueueOptimal = `/*
+* implement a queue.
+*/
+
+/*
+* define global variables.
+*/
+let queue = undefined;
+
+/*
+* define functions.
+*/
+function push(item) {
+
+}
+
+function pop() {
+
+}
+
+function peek() {
+
+}`;
+
 export const QueueTest = function (codeStr) {
   const testData = {
     testCases: [],
