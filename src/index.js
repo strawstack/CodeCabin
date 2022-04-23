@@ -208,6 +208,11 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   }
 
   function showRuntimeData(data) {
+    if (data.runtime.actual === null) {
+      return <div>Runtime test threw an exception.</div>;
+    } else if (data.runtime.actual === false) {
+      return <div>Runtime test wrong answer.</div>;
+    }
     return [
       <div>Expected: {data.runtime.expected} ms</div>,
       <div>Actual: {data.runtime.actual} ms</div>,
