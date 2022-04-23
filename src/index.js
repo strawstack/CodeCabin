@@ -47,6 +47,7 @@ function Main() {
   const [focusIndex, setfocusIndex] = useState(0);
 
   useEffect(() => {
+    document.title = 'CodeCabin';
     window.addEventListener('keyup', keyUpEvent);
     return () => {
       window.removeEventListener('keyup', keyUpEvent);
@@ -61,6 +62,7 @@ function Main() {
         to={`/${d.to}`}
         key={uid}
         ref={d.ref}
+        onMouseEnter={() => setfocusIndex(uid)}
       >
         {uid} {d.name}
       </Link>
@@ -188,7 +190,6 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   }
 
   function showTestData(data) {
-    console.log(data);
     let count = 0;
     let lst = [];
     for (let testCaseResult of data.testCases) {
@@ -220,6 +221,7 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   }
 
   useEffect(() => {
+    document.title = 'CodeCabin';
     setHeight(getHeight());
     setWidth(width);
     setCode(code);
