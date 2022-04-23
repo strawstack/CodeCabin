@@ -53,41 +53,6 @@ testCases.push(`
   return true;
 `);
 
-function listsEqual(a, b) {
-  if (a.length !== b.length) {
-    return false;
-  }
-  for (let i = 0; i < a.length; i++) {
-    if (a[i] !== b[i]) {
-      return false;
-    }
-  }
-  return true;
-}
-
-const runtimeTestcase = `
-let lst = [];
-let count = 0;
-while (count < 1000000) {
-    lst.push(Math.floor(Math.random() * 100000))
-    count += 1;
-}
-
-count = 0;
-while (count < 1000000) {
-    push(lst[i]);
-    count += 1;
-}
-
-count = 0;
-let ansLst = [];
-while (count < 1000000) {
-    if (pop() !== lst[count]) {
-      return false;
-    }
-    return true;
-}`;
-
 const queueOptimal = `
 let frontPointer = null;
 let backPointer = null;
@@ -128,6 +93,32 @@ function peek() {
     return null;
 }`;
 
+const runtimeTestcase = `
+let lst = [];
+let count = 0;
+while (count < 1000000) {
+    lst.push(Math.floor(Math.random() * 100000))
+    count += 1;
+}
+
+count = 0;
+let startTime = new Date().getTime();
+while (count < 1000000) {
+    push(lst[i]);
+    count += 1;
+}
+
+count = 0;
+let ansLst = [];
+while (count < 1000000) {
+    if (pop() !== lst[count]) {
+      return false;
+    }
+    return true;
+}
+let endTime = new Date().getTime();
+return endTime - startTime;`;
+
 export const QueueTest = function (codeStr) {
   const testData = {
     testCases: [],
@@ -144,5 +135,20 @@ export const QueueTest = function (codeStr) {
     } catch (e) {} // if exception, 'testCaseResult' will be null
     testData.testCases.push(testCaseResult);
   }
+
+  const testFunction = new Function(queueOptimal + runtimeTestcase);
+  let testCaseResult = null;
+  try {
+    testCaseResult = testFunction();
+  } catch (e) {}
+  testData.runtimes.expected = testCaseResult;
+
+  const testFunction = new Function(codeStr + runtimeTestcase);
+  let testCaseResult = null;
+  try {
+    testCaseResult = testFunction();
+  } catch (e) {}
+  testData.runtimes.actual = testCaseResult;
+
   return testData;
 };
