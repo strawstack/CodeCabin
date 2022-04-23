@@ -208,7 +208,10 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   }
 
   function showRuntimeData(data) {
-    return <div>Runtime data here</div>;
+    return [
+      <div>Expected: {data.runtime.expected} ms</div>,
+      <div>Actual: {data.runtime.actual} ms</div>,
+    ];
   }
 
   useEffect(() => {

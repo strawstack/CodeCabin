@@ -94,27 +94,27 @@ function peek() {
 }`;
 
 const runtimeTestcase = `
+const LST_SIZE = 1000000;
 let lst = [];
 let count = 0;
-while (count < 1000000) {
+while (count < LST_SIZE) {
     lst.push(Math.floor(Math.random() * 100000))
     count += 1;
 }
 
 count = 0;
 let startTime = new Date().getTime();
-while (count < 1000000) {
-    push(lst[i]);
+while (count < LST_SIZE) {
+    push(lst[count]);
     count += 1;
 }
 
 count = 0;
-let ansLst = [];
-while (count < 1000000) {
+while (count < LST_SIZE) {
     if (pop() !== lst[count]) {
-      return false;
+        return false;
     }
-    return true;
+    count += 1;
 }
 let endTime = new Date().getTime();
 return endTime - startTime;`;
@@ -122,33 +122,35 @@ return endTime - startTime;`;
 export const QueueTest = function (codeStr) {
   const testData = {
     testCases: [],
-    runtimes: {
+    runtime: {
       expected: null, // <- run the built in optimal solution against the 'runtime' testcase
       actual: null,
     },
   };
+  let testFunction = null;
+  let testCaseResult = null;
   for (let testCase of testCases) {
-    const testFunction = new Function(codeStr + testCase);
-    let testCaseResult = null;
+    testFunction = new Function(codeStr + testCase);
+    testCaseResult = null;
     try {
       testCaseResult = testFunction();
     } catch (e) {} // if exception, 'testCaseResult' will be null
     testData.testCases.push(testCaseResult);
   }
 
-  const testFunction = new Function(queueOptimal + runtimeTestcase);
-  let testCaseResult = null;
+  testFunction = new Function(queueOptimal + runtimeTestcase);
+  testCaseResult = null;
   try {
     testCaseResult = testFunction();
   } catch (e) {}
-  testData.runtimes.expected = testCaseResult;
+  testData.runtime.expected = testCaseResult;
 
-  const testFunction = new Function(codeStr + runtimeTestcase);
-  let testCaseResult = null;
+  testFunction = new Function(codeStr + runtimeTestcase);
+  testCaseResult = null;
   try {
     testCaseResult = testFunction();
   } catch (e) {}
-  testData.runtimes.actual = testCaseResult;
+  testData.runtime.actual = testCaseResult;
 
   return testData;
 };
