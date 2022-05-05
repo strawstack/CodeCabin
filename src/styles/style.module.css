@@ -22,9 +22,16 @@
 .About {
   opacity: 1;
 }
+.About p {
+  max-width: 600px;
+}
 
 .Code {
   height: 100%;
+}
+
+.Code .Bold {
+  font-weight: bold;
 }
 
 .Code .CodeLeft,

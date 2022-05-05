@@ -7,6 +7,7 @@ import styles from './styles/style.module.css';
 import './styles/style.css';
 import './styles/resizable-styles.css';
 import { QueueTemplate, QueueTest } from './code/queue.js';
+import { BinarySearchTemplate, BinarySearchTest } from './code/binarySearch.js';
 
 function syncLocalStorageWithState(key, initialState) {
   const [code, setCode] = React.useState(
@@ -35,12 +36,25 @@ const queuePage = (
   />
 );
 
+const binarySearchDescription =
+  'A binary search is an efficient way to find data in a sorted list.';
+const binarySearchPage = (
+  <Code
+    name="binary search"
+    description={binarySearchDescription}
+    imageLink="https://via.placeholder.com/500"
+    videoLink="#"
+    initialCode={BinarySearchTemplate}
+    test={BinarySearchTest}
+  />
+);
+
 let algorithmList = [
   { name: 'about this site', to: 'about', component: <About /> },
   { name: 'queue', to: 'queue', component: queuePage },
-  { name: 'binary search', to: 'binary_search', component: <Code /> },
-  { name: 'heap', to: 'heap', component: <Code /> },
-  { name: 'prims', to: 'prims', component: <Code /> },
+  { name: 'binary search', to: 'binary_search', component: binarySearchPage },
+  //{ name: 'heap', to: 'heap', component: <Code /> },
+  //{ name: 'prims', to: 'prims', component: <Code /> },
 ];
 
 function Main() {
@@ -108,7 +122,13 @@ function About() {
     <Container>
       <div className={styles.About}>
         <h1>About</h1>
-        <p>explain the intent of this site.</p>
+        <p>
+          This site is a place to implement the fifteen core algorithms of
+          computer science. Learning resources and tests are provided for each
+          algorithm. Just as one might hike in the woods on a regular basis, it
+          is recommended to return here often to remain connected with the
+          fundamentals of computer science.
+        </p>
       </div>
     </Container>
   );
@@ -186,6 +206,7 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
   }
 
   function testCode() {
+    setShowLearn(false);
     setTestData(test(code));
   }
 
@@ -194,13 +215,15 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
     let lst = [];
     for (let testCaseResult of data.testCases) {
       lst.push(
-        <div>
+        <div key={count}>
           Testcase {count}:{' '}
-          {testCaseResult === null
-            ? 'Exception'
-            : testCaseResult
-            ? 'Correct'
-            : 'Wrong answer'}
+          <span class={styles.Bold}>
+            {testCaseResult === null
+              ? 'Exception'
+              : testCaseResult
+              ? 'Correct'
+              : 'Wrong answer'}
+          </span>
         </div>
       );
       count += 1;
@@ -215,8 +238,12 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
       return <div>Runtime test wrong answer.</div>;
     }
     return [
-      <div>Expected: {data.runtime.expected} ms</div>,
-      <div>Actual: {data.runtime.actual} ms</div>,
+      <div>
+        Expected: <span class={styles.Bold}>{data.runtime.expected} ms</span>
+      </div>,
+      <div>
+        Actual: <span class={styles.Bold}>{data.runtime.actual} ms</span>
+      </div>,
     ];
   }
 
