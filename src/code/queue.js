@@ -119,6 +119,15 @@ while (count < LST_SIZE) {
 let endTime = new Date().getTime();
 return endTime - startTime;`;
 
+function calculateMean(lst) {
+  lst = lst.filter((x) => x !== null);
+  let total = 0;
+  for (let item of lst) {
+    total += item;
+  }
+  return total / lst.length;
+}
+
 export const QueueTest = function (codeStr) {
   const testData = {
     testCases: [],
@@ -138,19 +147,29 @@ export const QueueTest = function (codeStr) {
     testData.testCases.push(testCaseResult);
   }
 
-  testFunction = new Function(queueOptimal + runtimeTestcase);
-  testCaseResult = null;
-  try {
-    testCaseResult = testFunction();
-  } catch (e) {}
-  testData.runtime.expected = testCaseResult;
+  let optTestCaseResultLst = [];
+  for (let i = 0; i < 10; i++) {
+    testFunction = new Function(queueOptimal + runtimeTestcase);
+    testCaseResult = null;
+    try {
+      testCaseResult = testFunction();
+    } catch (e) {}
+    optTestCaseResultLst.push(testCaseResult);
+  }
 
-  testFunction = new Function(codeStr + runtimeTestcase);
-  testCaseResult = null;
-  try {
-    testCaseResult = testFunction();
-  } catch (e) {}
-  testData.runtime.actual = testCaseResult;
+  testData.runtime.expected = calculateMean(optTestCaseResultLst);
+
+  let userTestCaseResultLst = [];
+  for (let i = 0; i < 10; i++) {
+    testFunction = new Function(codeStr + runtimeTestcase);
+    testCaseResult = null;
+    try {
+      testCaseResult = testFunction();
+    } catch (e) {}
+    userTestCaseResultLst.push(testCaseResult);
+  }
+
+  testData.runtime.actual = calculateMean(userTestCaseResultLst);
 
   return testData;
 };

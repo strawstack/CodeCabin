@@ -298,6 +298,12 @@ function Code({ name, description, imageLink, videoLink, initialCode, test }) {
             ) : (
               showRuntimeData(testData)
             )}
+            <h2>Details</h2>
+            <div>
+              Your code is run 10 times to obtain an average runtime shown
+              above. A built-in optimal solution is also run locally in your
+              browser to obtain a benchmark optimal runtime.
+            </div>
           </div>
         </div>
       </ResizableBox>
